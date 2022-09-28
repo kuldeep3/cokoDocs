@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14.5-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-cokodocs_dev}
+      - POSTGRES_USER=${POSTGRES_USER:-dev_user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-dev_user_password}
+    volumes:
+      - ./server/scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+  server:
+    restart: always
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile-development
+    depends_on:
+      - db
+    ports:
+      - '4000:4000'
+    volumes:
+      - ./server/config:/home/node/cokodocs/config
+  client:
+    restart: always
+    
