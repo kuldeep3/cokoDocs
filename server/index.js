@@ -1,11 +1,14 @@
-const express = require("express");
-const PORT = process.env.PORT || 3001;
-const app = express();
+const io = require('socket.io')();
 
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from server!" });
+io.on('connection',(client) => {
+    client.on('subscribeToTimer', (interval) => {
+        console.log('client is subscribing to timer with interval ', interval);
+        setInterval(() => {
+            client.emit( 'timer', new Date() );
+        }, interval);
+    });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
+const port = 8000;
+io.listen(port);
+console.log('server.js - listening on port: ', port);
