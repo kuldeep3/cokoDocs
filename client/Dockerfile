@@ -17,7 +17,7 @@ FROM base-stage as build-stage
 
 # copies everything over to Docker environment
 COPY . ./
-RUN npm build
+RUN npm run build
 
 # pull the official nginx1.23.1-alpine base image
 FROM nginx:1.23.1-alpine as production-stage
@@ -29,7 +29,7 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 
 # copies static resources from build stage
-COPY --from=build-stage /home/node/app/_build /usr/share/nginx/html/
+COPY --from=build-stage /home/cokodocs/app/build /usr/share/nginx/html/
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 
