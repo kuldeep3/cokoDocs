@@ -18,7 +18,7 @@ services:
     depends_on:
       - db
     ports:
-      - 4000:4000
+      - ${SERVER_PORT}:${SERVER_PORT}
     environment:
       - NODE_ENV=${NODE_ENV}
       - SERVER_PROTOCOL=${SERVER_PROTOCOL}
@@ -32,7 +32,7 @@ services:
       context: ./client
       dockerfile: ${DOCKERFILE}
     ports:
-      - 3000:3000
+      - ${CLIENT_PORT}:${CLIENT_PORT}
     environment:
       - NODE_ENV=${NODE_ENV}
       - CLIENT_PROTOCOL=${CLIENT_PROTOCOL}
