@@ -9,6 +9,6 @@ io.on('connection',(client) => {
     });
 });
 
-const port = 8000;
+const port = process.env.SERVER_PORT;
 io.listen(port);
 console.log('server.js - listening on port: ', port);
