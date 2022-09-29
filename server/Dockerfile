@@ -1,8 +1,8 @@
 # pull official base image
 FROM node:18-alpine3.15
 
-# install dependencies
-RUN apt-get update \ && apt-get upgrade -y \ && apt-get install -y vim
+# creating directories
+RUN apk add --no-cache git python2 make g++
 
 # set working directory
 WORKDIR /home/node/cokodocs
@@ -11,10 +11,12 @@ WORKDIR /home/node/cokodocs
 COPY package.json .
 COPY package-lock.json .
 
+# update permissions.
 RUN chown -R node:node .
 USER node
 
 # install all node packages
 RUN npm install
-RUN npm cache clean
 COPY --chown=node:node . .
+
+CMD [ "node", "index.js" ]
