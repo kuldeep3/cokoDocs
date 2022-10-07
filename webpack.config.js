@@ -5,7 +5,6 @@ module.exports = {
     mode: 'development',
     entry: {
         index: './src/index.js',
-        print: './src/print.js',
     },
     devtool: 'inline-source-map',
     devServer: {
@@ -14,27 +13,16 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Development',
+            filename: './index.html',
         }),
     ],
+    optimization: {
+        runtimeChunk: 'single',
+    },
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, "dist"),
         clean: true,
         publicPath: '/',
-    },
-    optimization: {
-        runtimeChunk: 'single',
-    },
-    module: {
-        rules: [
-            {
-                test: /\.css$/i,
-                use: ["style-loader", "css-loader"],
-            },
-            {
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
-                type: "asset/resource",
-            },
-        ],
     },
 };
