@@ -12,8 +12,11 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
+            hash: true,
             title: 'Development',
-            filename: './index.html',
+            template: './src/index.html',
+            id:'editor',
+            inject: false,
         }),
     ],
     optimization: {
